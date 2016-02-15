@@ -101,10 +101,10 @@ var Engine = (function(global) {
     function checkCollisions(){
         allEnemies.forEach(function (enemy){
 
-            var playerXPlusWidth = player.x + Resources.get(player.sprite).width
-            var playerYPlusheight = player.y + Resources.get(player.sprite).height
-            var enemyXPlusWidth =  enemy.x + Resources.get(enemy.sprite).width
-            var enemyYPlusheight =  enemy.y + Resources.get(enemy.sprite).height
+            var playerXPlusWidth = player.x + Resources.get(player.sprite).width;
+            var playerYPlusheight = player.y + Resources.get(player.sprite).height;
+            var enemyXPlusWidth =  enemy.x + Resources.get(enemy.sprite).width;
+            var enemyYPlusheight =  enemy.y + Resources.get(enemy.sprite).height;
             if ((player.left < enemy.right)&& 
                 (player.right > enemy.left ) && 
                 (player.top < enemy.bottom)  && 

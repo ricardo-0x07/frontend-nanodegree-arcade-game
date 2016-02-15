@@ -1,3 +1,6 @@
+
+var TILE_WIDTH = 101, TILE_HEIGHT = 83, CANVAS_WIDTH = 505, CANVAS_HEIGHT = 606;
+
 // 
 /**
 * @description Represents the Game controller
@@ -165,26 +168,27 @@ Player.prototype.handleInput = function(keyCode) {
     if (controller.init) {
         if(keyCode== 'left') {
             // Checking to make sure player does not go off the canvas
-            if (player.x-50>0) {
-                player.x-=101;
+            if (this.x-50>0) {
+                // alert(TILE_WIDTH);
+                this.x-=TILE_WIDTH;
             }
         }
         else if(keyCode == 'up') {
             // Checking to make sure player does not go off the canvas
             // if (player.y-48>0) {
-                player.y-=83;
+                this.y-=TILE_HEIGHT;
             // }
         }
         else if(keyCode == 'right') {
             // Checking to make sure player does not go off the canvas
-            if (player.x+105<505) {
-                player.x+=101;
+            if (this.x+105<CANVAS_WIDTH) {
+                this.x+=TILE_WIDTH;
             }
         }
         else if(keyCode == 'down') {
             // Checking to make sure player does not go off the canvas
-            if (player.y+240 <606) {
-                player.y+=83;
+            if (this.y+240 <CANVAS_HEIGHT) {
+                this.y+=TILE_HEIGHT;
             }
         }
 
@@ -211,7 +215,7 @@ Player.prototype.restart = function(){
     } else {
         $("#life").text("Life: "+this.life);
     }
-}
+};
 
 /**
 * @description Executed continuously to generate enemies randomly
@@ -238,7 +242,7 @@ function generateEnemiesTimer() {
 * @description Instantiation of objects
 */
 var allEnemies = [], player = new Player(200,400,30);
-var controller = new Controller()
+var controller = new Controller();
 
 /**
 * @description Count down of game time
