@@ -15,6 +15,8 @@
  */
 
 var Engine = (function(global) {
+                    // console.log("Ran var Engine = (function(global) {");
+
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
@@ -33,6 +35,8 @@ var Engine = (function(global) {
      * and handles properly calling the update and render methods.
      */
     function main() {
+                // console.log("Ran function main() {");
+
         /* Get our time delta information which is required if your game
          * requires smooth animation. Because everyone's computer processes
          * instructions at different speeds we need a constant value that
@@ -45,8 +49,11 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
-        render();
+        // if (controller.init) {
+
+            update(dt);
+            render();
+        // }
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -56,6 +63,7 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
+
         win.requestAnimationFrame(main);
     }
 
@@ -64,9 +72,11 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
+
         reset();
         lastTime = Date.now();
         main();
+        // console.log("Ran function init() {");
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -79,10 +89,39 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
-        // checkCollisions();
+        // Stop all play 
+         if (controller.init) {
+            updateEntities(dt);
+            // Checks for collision between player and enemies.
+            checkCollisions();
+        }
+
     }
 
+    function checkCollisions(){
+        allEnemies.forEach(function (enemy){
+
+            var playerXPlusWidth = player.x + Resources.get(player.sprite).width
+            var playerYPlusheight = player.y + Resources.get(player.sprite).height
+            var enemyXPlusWidth =  enemy.x + Resources.get(enemy.sprite).width
+            var enemyYPlusheight =  enemy.y + Resources.get(enemy.sprite).height
+            if ((player.left < enemy.right)&& 
+                (player.right > enemy.left ) && 
+                (player.top < enemy.bottom)  && 
+                (player.bottom >enemy.top)) {
+
+                player.life--;
+                // Checks to see if player has life remain, stop game if no life remaining
+                if (player.life<1) {
+                    player.restart();
+                    controller.pause();
+
+                }
+                // Reset player after loosing a life
+                    player.restart();
+            }
+    });       
+    }
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -104,6 +143,7 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
+                // console.log("Ran function render() {");
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
@@ -160,6 +200,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
